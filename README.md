@@ -233,7 +233,12 @@ AWS deployment
 👨‍💻 Author
 
 Sumit Raj
+---------------------------------------
+📄 Example .env File
 
-📜 License
+Create a .env file in the root directory with the following content:
 
-ISC
+PORT=4040
+MONGO_URI=mongodb://127.0.0.1:27017/virtual_management
+JWT_SECRET=your_super_secret_key
+JWT_EXPIRES_IN=1d
