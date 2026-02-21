@@ -1,24 +1,20 @@
 🎉 Virtual Event Management API
 
-A scalable RESTful API for managing virtual events, built with Node.js, Express, and MongoDB.
+A scalable RESTful API for managing virtual events, built using Node.js, Express, and MongoDB.
 
-This application supports secure authentication, role-based authorization, event management, and attendee registration.
+This system supports:
 
-🚀 Project Status
+👤 User Registration & Login
 
-✅ Core features implemented
+🔐 JWT Authentication
 
-User Registration & Login
+🛡 Role-Based Authorization (Organizer / Attendee)
 
-JWT Authentication
+📅 Event Creation & Management
 
-Role-Based Access Control (Organizer / Attendee)
+🙋 Event Registration System
 
-Event CRUD Operations
-
-Event Registration System
-
-Centralized Error Handling
+⚠ Centralized Error Handling
 
 🛠 Tech Stack
 
@@ -26,48 +22,30 @@ Centralized Error Handling
 
 🍃 MongoDB + Mongoose
 
-🔐 JWT (Authentication)
+🔐 JSON Web Token (JWT)
 
 🔑 bcrypt (Password Hashing)
 
-✅ Joi (Request Validation)
+✅ Joi (Validation)
 
-🧹 Custom Middleware (Auth, Validation, Error Handling)
+🧹 Custom Middleware
 
 📁 Project Structure
-├── index.js                # Application entry point
-├── app.js                  # Express configuration
+├── index.js
+├── app.js
 ├── config/
-│   └── db.config.js        # MongoDB connection setup
-│
+│   └── db.config.js
 ├── routes/
-│   ├── index.route.js
 │   ├── auth.route.js
-│   └── event.route.js
-│
+│   ├── event.route.js
+│   └── index.route.js
 ├── controllers/
-│   ├── auth.controller.js
-│   └── event.controller.js
-│
 ├── services/
-│   ├── auth.service.js
-│   └── event.service.js
-│
 ├── models/
-│   ├── user.model.js
-│   └── event.model.js
-│
 ├── middlewares/
-│   ├── auth.middleware.js
-│   ├── validate.middleware.js
-│   └── error.middleware.js
-│
 ├── validations/
-│
-├── utils/
-│   ├── apiError.js
-│   └── asyncHandler.js
-🏁 Getting Started
+└── utils/
+🚀 Getting Started
 ✅ Prerequisites
 
 Node.js (v16+ recommended)
@@ -77,11 +55,6 @@ npm
 MongoDB (Local or Atlas)
 
 📦 Installation
-
-1️⃣ Clone the repository
-
-2️⃣ Install dependencies
-
 npm install
 ⚙️ Environment Configuration
 
@@ -91,16 +64,7 @@ PORT=4040
 MONGO_URI=mongodb://127.0.0.1:27017/virtual_management
 JWT_SECRET=your_secret_key
 JWT_EXPIRES_IN=1d
-🔎 Environment Variables
-Variable	Description
-PORT	Server port (default: 4040)
-MONGO_URI	MongoDB connection string
-JWT_SECRET	Secret used to sign JWT tokens
-JWT_EXPIRES_IN	Token expiration time
 ▶️ Run the Application
-
-Development mode:
-
 npm start
 
 Server runs at:
@@ -111,8 +75,12 @@ Base API path:
 
 /api
 📡 API Endpoints
-🔐 Authentication
-➕ Register
+
+Base URL:
+
+http://localhost:4040/api
+🔐 Authentication Routes
+➕ Register User
 
 POST /api/auth/register
 
@@ -131,9 +99,16 @@ organizer
 
 attendee
 
-🔑 Login
+Response:
+
+{
+  "message": "User registered successfully"
+}
+🔑 Login User
 
 POST /api/auth/login
+
+Request Body:
 
 {
   "email": "sumit@example.com",
@@ -144,90 +119,116 @@ Response:
 
 {
   "token": "JWT_TOKEN",
-  "user": { ... }
+  "user": {
+    "_id": "user_id",
+    "username": "sumit",
+    "email": "sumit@example.com",
+    "role": "organizer"
+  }
 }
-👥 Get Users (Protected)
+👥 Get All Users (Protected)
 
 GET /api/auth/users
 
 Header:
 
 Authorization: Bearer <token>
-📅 Event Management
+📅 Event Routes (Protected)
 
-🔒 All event routes require authentication.
+All event routes require JWT token in the header.
 
+Header:
+
+Authorization: Bearer <token>
 ➕ Create Event (Organizer Only)
 
 POST /api/event
 
+Request Body:
+
 {
   "title": "Tech Meetup",
-  "description": "Backend Session",
+  "description": "Backend development session",
   "date": "2026-03-01",
   "attendees": []
 }
-📋 List All Events
+📋 Get All Events
 
 GET /api/event
 
-🔍 Get Event by ID
+Returns:
+
+List of all events
+
+Organizer details
+
+Attendee details
+
+🔍 Get Event By ID
 
 GET /api/event/:id
+
+Returns:
+
+Event details
+
+Organizer username
+
+Attendee usernames
 
 ✏️ Update Event (Organizer Only)
 
 PUT /api/event/:id
 
+Request Body:
+
+{
+  "title": "Updated Title",
+  "description": "Updated Description"
+}
 ❌ Delete Event (Organizer Only)
 
 DELETE /api/event/:id
 
-🙋 Register for Event
+Response:
+
+{
+  "message": "Event deleted successfully"
+}
+🙋 Register for Event (Attendee)
 
 POST /api/event/:id/register
 
-Registers the logged-in user as an attendee.
+Response:
 
-🧠 Architecture Highlights
-
-Clean separation of concerns (Controller → Service → Model)
-
-MongoDB aggregation for joining organizer and attendee details
-
-Centralized error handling using custom ApiError class
-
-Async handler wrapper for clean async controller logic
-
-Role-based route protection
-
+{
+  "message": "Successfully registered for event"
+}
 🔐 Security Features
 
-Password hashing using bcrypt
+Passwords hashed using bcrypt
 
 JWT-based authentication
 
-Role-based authorization
+Role-based access control
 
-Request validation with Joi
+Request validation using Joi
 
 Centralized error handling
 
 🚀 Future Improvements
 
-Add pagination & filtering
+Pagination & filtering
 
-Add Swagger/OpenAPI documentation
+Swagger/OpenAPI documentation
 
-Add unit & integration tests
+Unit & integration tests
 
-Add rate limiting
+Rate limiting
 
-Add email notifications
+Docker support
 
-Dockerize the application
-
-Deploy to AWS
+AWS deployment
 
 👨‍💻 Author
 
